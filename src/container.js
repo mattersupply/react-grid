@@ -36,13 +36,21 @@ export const makeContainerMaxWidths = ({
   return styles;
 };
 
-const Container = ({ children, styles, fluid, ...props }) => {
+const Container = ({ children, styles, fluid, section, ...props }) => {
+
+  const containerProps = {
+    'data-eg-container': 'true',
+    css: [makeContainer(styles), !fluid && makeContainerMaxWidths(styles)],
+  }
+
+  if (section) {
+    <section {...props} {...containerProps}>
+      {children}
+    </section>
+  }
+
   return (
-    <div
-      {...props}
-      data-eg-container="true"
-      css={[makeContainer(styles), !fluid && makeContainerMaxWidths(styles)]}
-    >
+    <div {...props} {...containerProps}>
       {children}
     </div>
   );
